@@ -3,7 +3,7 @@ import Image from "next/image";
 import Script from "next/script";
 import type { ReactNode } from "react";
 
-const SITE_URL = "https://ortrack.fr";
+const SITE_URL = "https://www.ortrack.fr";
 const PAGE_PATH = "/fiscalite-vente-or-france";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
