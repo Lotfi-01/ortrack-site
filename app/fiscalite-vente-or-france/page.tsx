@@ -121,15 +121,15 @@ export default function FiscaliteVenteOrFrancePage() {
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <a
           href="/fiscalite-vente-or-france"
-          className="inline-flex items-center gap-2 text-xl font-black tracking-tight"
+          className="inline-flex items-center gap-2.5 text-2xl font-black tracking-tight"
           aria-label="OrTrack"
         >
           <Image
             src="/icon.png"
             alt=""
-            width={36}
-            height={36}
-            className="h-9 w-9 rounded-md"
+            width={44}
+            height={44}
+            className="h-11 w-11 rounded-md"
             priority
           />
           <span>
