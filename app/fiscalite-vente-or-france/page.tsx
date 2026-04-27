@@ -121,15 +121,15 @@ export default function FiscaliteVenteOrFrancePage() {
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <a
           href="/fiscalite-vente-or-france"
-          className="inline-flex items-center gap-2.5 text-2xl font-black tracking-tight"
+          className="inline-flex items-center gap-2.5 text-2xl font-black tracking-tight md:text-3xl"
           aria-label="OrTrack"
         >
           <Image
             src="/icon.png"
             alt=""
-            width={44}
-            height={44}
-            className="h-11 w-11 rounded-md"
+            width={48}
+            height={48}
+            className="h-12 w-12 rounded-md"
             priority
           />
           <span>
@@ -162,7 +162,7 @@ export default function FiscaliteVenteOrFrancePage() {
             <GooglePlayBadge className="h-14 sm:h-16" />
 
             <p className="mt-3 text-sm font-medium text-[#B3A692]">
-              Estimez votre net vendeur directement dans l’application.
+              Application mobile pour suivre vos métaux précieux physiques.
             </p>
           </div>
 
@@ -172,7 +172,7 @@ export default function FiscaliteVenteOrFrancePage() {
             <MiniStat title="Données" label="sur votre appareil" />
           </div>
 
-          <p className="mt-6 max-w-2xl text-[13px] font-medium leading-6 text-[#B3A692]">
+          <p className="mt-6 max-w-2xl text-[13px] font-medium leading-6 text-[#C7BBA8]">
             Simulation indicative basée sur les régimes fiscaux français des
             métaux précieux. Sources : CGI art. 150 VI et 150 VL.
           </p>
@@ -314,7 +314,7 @@ export default function FiscaliteVenteOrFrancePage() {
           <p>© OrTrack</p>
           <p>
             OrTrack · Fiscalité or France · Application de suivi des métaux
-            précieux
+            précieux · Conçu en France · Données saisies par l’utilisateur
           </p>
         </div>
       </footer>
