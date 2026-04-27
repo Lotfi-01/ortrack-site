@@ -14,6 +14,12 @@ export const metadata: Metadata = {
   title: "Fiscalité vente or France : estimez le net vendeur | OrTrack",
   description:
     "Vous détenez une pièce ou un lingot ? OrTrack vous aide à estimer le net vendeur après fiscalité française avant une vente d’or.",
+  icons: {
+    icon: [
+      { url: "/favicon.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+  },
   alternates: {
     canonical: PAGE_URL,
   },
