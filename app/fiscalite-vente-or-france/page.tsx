@@ -7,11 +7,48 @@ const SITE_URL = "https://www.ortrack.fr";
 const PAGE_PATH = "/fiscalite-vente-or-france";
 const PAGE_URL = `${SITE_URL}${PAGE_PATH}`;
 
-const PLAY_STORE_URL =
-  "https://play.google.com/store/apps/details?id=com.ortrack.app&referrer=utm_source%3Dseo%26utm_medium%3Dlanding_page%26utm_campaign%3Dfiscalite_vente_or_france";
+// Keep null until the owner approves a dated fiscal review. A build date is not a legal review.
+const FISCAL_REVIEW_DATE: string | null = null;
+
+type PlayCtaLocation = "header" | "hero" | "mid";
+
+function getPlayStoreUrl(location: PlayCtaLocation): string {
+  const referrer = new URLSearchParams({
+    utm_source: "ortrack.fr",
+    utm_medium: "website",
+    utm_campaign: `fiscalite_fr_${location}`,
+  });
+
+  return `https://play.google.com/store/apps/details?id=com.ortrack.app&referrer=${encodeURIComponent(referrer.toString())}`;
+}
+
+const FISCAL_SOURCES = {
+  flatTax:
+    "https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006069577/LEGISCTA000006191581/",
+  crds:
+    "https://www.economie.gouv.fr/particuliers/impots-et-fiscalite/gerer-mes-autres-impots-et-taxes/vente-dobjets-precieux-quelle",
+  capitalGains:
+    "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000037988296/",
+  allowance:
+    "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000047970756/",
+  incomeTaxRate:
+    "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000030061684/",
+  socialContributions:
+    "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053584839/",
+  csgRate:
+    "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000054336623/",
+  crdsCapitalGains:
+    "https://www.legifrance.gouv.fr/loda/id/LEGITEXT000005620212/",
+  solidarityRate:
+    "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000037949145/",
+  proof:
+    "https://bofip.impots.gouv.fr/bofip/4161-PGP.html/identifiant=BOI-RPPM-PVBMC-20-20-20140401",
+  classification:
+    "https://bofip.impots.gouv.fr/bofip/4151-PGP.html/identifiant=BOI-RPPM-PVBMC-20-10-20181231",
+};
 
 export const metadata: Metadata = {
-  title: "Fiscalité vente or France : estimez le net vendeur | OrTrack",
+  title: "Vente d’or : taxe de 11,5 % ou plus-value ? | OrTrack",
   description:
     "Vous détenez une pièce ou un lingot ? OrTrack vous aide à estimer le net vendeur après fiscalité française avant une vente d’or.",
   icons: {
@@ -44,48 +81,39 @@ export const metadata: Metadata = {
   },
 };
 
-const regimes = [
-  "Taxe forfaitaire sur les métaux précieux",
-  "Régime des plus-values réelles",
-];
-
 const dataPoints = [
-  "Prix d’achat",
-  "Date d’achat",
-  "Valeur estimée de vente",
-  "Durée de détention",
-  "Règles d’abattement",
-];
-
-const assets = [
-  "Pièces d’or",
-  "Lingots",
-  "Lingotins",
-  "Pièces d’argent",
-  "Platine",
-  "Palladium",
+  "Date et prix d’acquisition justifiés, ou preuve d’une détention de plus de vingt-deux ans",
+  "Identification suffisante du bien ou du lot vendu",
 ];
 
 const faqs = [
   {
     question: "Quelle taxe sur la vente d’or en France ?",
     answer:
-      "La vente d’or physique relève de règles fiscales spécifiques. OrTrack propose une estimation indicative selon les régimes simulés dans l’application.",
+      "Pour un particulier résident fiscal français, une vente relevant de la catégorie des métaux précieux est en principe soumise à 11,5 % du prix de vente : 11 % de taxe et 0,5 % de CRDS. L’option pour les plus-values est soumise à conditions. Des exonérations spécifiques existent, notamment pour certaines cessions à des institutions publiques.",
+    sourceHref: FISCAL_SOURCES.flatTax,
+    sourceLabel: "CGI, art. 150 VI, 150 VJ et 150 VK",
   },
   {
-    question: "Comment calculer la plus-value sur l’or ?",
+    question: "Vente d’or : existe-t-il une exonération jusqu’à 5 000 € ?",
     answer:
-      "Le calcul dépend du prix d’achat, de la date d’achat, de la valeur de vente estimée et de la durée de détention.",
+      "L’article 150 VJ, 4° vise les bijoux, objets d’art, de collection ou d’antiquité lorsque le prix de cession n’excède pas 5 000 €. Il ne vise pas les métaux précieux de l’article 150 VI, I, 1°. Le seul fait de vendre un lingot ou une pièce relevant de cette catégorie pour moins de 5 000 € ne donne donc pas cette exonération. La qualification du produit doit être vérifiée.",
+    sourceHref: FISCAL_SOURCES.flatTax,
+    sourceLabel: "CGI, art. 150 VI, I et 150 VJ, 4°",
   },
   {
     question: "Faut-il garder une facture d’achat pour l’or ?",
     answer:
-      "La facture aide à renseigner le prix et la date d’achat. Ces informations améliorent la qualité de la simulation.",
+      "Conservez les justificatifs de la date et du prix d’acquisition, ou d’une détention de plus de vingt-deux ans. Pour les métaux précieux, le bien ou le lot doit aussi être suffisamment individualisé : numéro, emballage scellé identifiable ou autre élément admis. Enregistrer un achat dans OrTrack ne remplace pas ces preuves et ne garantit pas l’accès au régime des plus-values.",
+    sourceHref: FISCAL_SOURCES.proof,
+    sourceLabel: "BOFiP, BOI-RPPM-PVBMC-20-20, notamment §90",
   },
   {
-    question: "Comment estimer le net vendeur avant une vente d’or ?",
+    question: "La vente d’or est-elle exonérée après 22 ans ?",
     answer:
-      "Vous pouvez saisir vos positions dans OrTrack. L’application estime la valeur du portefeuille et le montant net en cas de vente.",
+      "Dans le régime des plus-values, l’abattement de 5 % par année révolue au-delà de la deuxième conduit à une exonération après vingt-deux ans de détention. L’option reste soumise aux justificatifs et à l’identification du bien ou du lot. L’ancienneté saisie dans une application ne suffit pas à établir ce droit.",
+    sourceHref: FISCAL_SOURCES.allowance,
+    sourceLabel: "CGI, art. 150 VC ; conditions de l’art. 150 VL et du BOFiP ci-dessus",
   },
   {
     question: "OrTrack donne-t-il un conseil fiscal ?",
@@ -138,7 +166,7 @@ export default function FiscaliteVenteOrFrancePage() {
         </a>
 
         <div className="hidden sm:block">
-          <GooglePlayBadge className="h-12" />
+          <GooglePlayBadge location="header" className="h-12" />
         </div>
       </header>
 
@@ -153,29 +181,44 @@ export default function FiscaliteVenteOrFrancePage() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[#C7BBA8]">
-            Vous détenez une pièce d’or, un lingot ou des métaux précieux
-            physiques ? OrTrack vous aide à suivre votre portefeuille et à
-            estimer le montant net en cas de vente, selon les données saisies.
+            Vous détenez des pièces ou des lingots ? Sur Android, OrTrack vous
+            aide à enregistrer vos achats, suivre la valeur de votre portefeuille
+            et explorer des simulations fiscales indicatives pour les produits
+            éligibles.
           </p>
 
           <div className="mt-8">
-            <GooglePlayBadge className="h-14 sm:h-16" />
+            <GooglePlayBadge location="hero" className="h-14 sm:h-16" />
 
             <p className="mt-3 text-sm font-medium text-[#B3A692]">
-              Application mobile pour suivre vos métaux précieux physiques.
+              Gratuit : jusqu’à 5 achats enregistrés et 2 alertes de prix.
+              Premium : simulations fiscales par achat et comparaison détaillée
+              des régimes, pour les produits éligibles.
+            </p>
+            <p className="mt-3 text-sm font-medium text-[#B3A692]">
+              Ajoutez votre première pièce ou votre premier lingot.
             </p>
           </div>
 
           <div className="mt-8 grid max-w-2xl grid-cols-3 gap-2">
             <MiniStat title="Or · Argent" label="Platine · Palladium" />
             <MiniStat title="Forfaitaire" label="vs plus-values" />
-            <MiniStat title="Données" label="sur votre appareil" />
+            <MiniStat title="Simulation" label="indicative" />
           </div>
 
           <p className="mt-6 max-w-2xl text-[13px] font-medium leading-6 text-[#C7BBA8]">
-            Simulation indicative basée sur les régimes fiscaux français des
-            métaux précieux. Sources : CGI art. 150 VI et 150 VL.
+            Les explications ci-dessous concernent les ventes occasionnelles de
+            particuliers résidents fiscaux français, hors activité
+            professionnelle. La valeur au cours du métal, l’estimation après
+            impôt et l’offre réelle de rachat sont des montants distincts.
+            Le palladium est suivi sans simulation fiscale ; la couverture
+            fiscale du platine dépend du produit.
           </p>
+          {FISCAL_REVIEW_DATE && (
+            <p className="mt-3 text-sm text-[#C7BBA8]">
+              Revue fiscale approuvée le {FISCAL_REVIEW_DATE}.
+            </p>
+          )}
         </div>
 
         <PhoneMockup />
@@ -185,23 +228,35 @@ export default function FiscaliteVenteOrFrancePage() {
         id="simulation"
         className="relative z-10 mx-auto grid max-w-6xl gap-5 px-6 pb-20 md:grid-cols-3"
       >
-        <InfoCard title="Deux régimes simulés">
+        <InfoCard title="Taxe forfaitaire : 11,5 %">
           <p>
-            OrTrack compare deux simulations pour les métaux précieux physiques
-            en France.
+            Pour une vente imposable dans la catégorie des métaux précieux, la
+            taxe est calculée sur le prix de vente, même sans plus-value : 11 %
+            de taxe forfaitaire et 0,5 % de CRDS.
           </p>
-
-          <ul className="mt-5 space-y-3">
-            {regimes.map((item) => (
-              <BulletItem key={item}>{item}</BulletItem>
-            ))}
-          </ul>
+          <p className="mt-4">
+            Cette catégorie comprend notamment les lingots d’or et les monnaies
+            d’or ou d’argent postérieures à 1800. Les bijoux et objets de
+            collection suivent d’autres règles. La catégorie fiscale d’un jeton
+            ou d’un produit particulier ne se déduit pas de son seul nom.
+          </p>
+          <p className="mt-4">
+            Le seuil de 5 000 € et les autres exonérations sont précisés dans la
+            FAQ ci-dessous.
+          </p>
+          <p className="mt-5 text-sm">
+            <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VI, 150 VJ et 150 VK</FiscalSource>
+            {" · "}
+            <FiscalSource href={FISCAL_SOURCES.crds}>CRDS : ministère de l’Économie</FiscalSource>
+            {" · "}
+            <FiscalSource href={FISCAL_SOURCES.classification}>BOFiP, classification, §20 à 70</FiscalSource>
+          </p>
         </InfoCard>
 
-        <InfoCard title="Données utilisées">
+        <InfoCard title="Plus-value : une option sous conditions">
           <p>
-            La simulation se base sur les informations que vous renseignez dans
-            l’application.
+            L’option pour le régime des plus-values sur biens meubles peut
+            remplacer la taxe forfaitaire si les conditions sont remplies :
           </p>
 
           <ul className="mt-5 space-y-3">
@@ -209,24 +264,39 @@ export default function FiscaliteVenteOrFrancePage() {
               <BulletItem key={item}>{item}</BulletItem>
             ))}
           </ul>
+          <p className="mt-4">
+            La plus-value correspond à la différence entre prix de vente et
+            coût d’acquisition, selon les règles applicables. Un abattement de
+            5 % par année révolue au-delà de la deuxième conduit à une exonération
+            après vingt-deux ans, sous réserve des preuves nécessaires.
+          </p>
+          <p className="mt-5 text-sm">
+            <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VL</FiscalSource>
+            {" · "}
+            <FiscalSource href={FISCAL_SOURCES.capitalGains}>CGI, art. 150 UA</FiscalSource>
+            {" · "}
+            <FiscalSource href={FISCAL_SOURCES.allowance}>CGI, art. 150 VC</FiscalSource>
+            {" · "}
+            <FiscalSource href={FISCAL_SOURCES.proof}>BOFiP, justificatifs, §90</FiscalSource>
+          </p>
         </InfoCard>
 
-        <InfoCard title="Portefeuille physique">
+        <InfoCard title="Valeur estimée et prix de rachat">
           <p>
-            Ajoutez vos métaux physiques et suivez leur valeur avec le cours du
-            jour.
+            La valorisation au cours du métal est une estimation fondée sur les
+            cours disponibles et les données de vos achats. Elle ne constitue
+            pas une offre de rachat.
           </p>
-
-          <div className="mt-5 flex flex-wrap gap-2">
-            {assets.map((item) => (
-              <span
-                key={item}
-                className="rounded-full bg-[#12110F] px-3 py-2 text-xs font-bold text-[#C7BBA8]"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
+          <p className="mt-4">
+            Une estimation après fiscalité ajoute des hypothèses de taxation.
+            Les frais, la marge du professionnel, l’état et les caractéristiques
+            du produit peuvent modifier le montant réellement reçu. Ne supposez
+            pas que ces coûts sont déduits par la simulation.
+          </p>
+          <p className="mt-4">
+            Demandez une offre au professionnel et vérifiez vos justificatifs
+            avant de vendre.
+          </p>
         </InfoCard>
       </section>
 
@@ -238,24 +308,71 @@ export default function FiscaliteVenteOrFrancePage() {
             </p>
 
             <h2 className="text-3xl font-black tracking-tight">
-              Une estimation lisible avant de vendre
+              Un exemple chiffré avant de vendre
             </h2>
           </div>
 
           <div className="space-y-4 text-[#C7BBA8]">
             <p>
-              Vous avez acheté une pièce d’or 1 800 €. Sa valeur estimée
-              actuelle est de 2 400 €.
+              Hypothèse : vente en octobre 2026 par un particulier résident fiscal
+              français, affilié à un régime obligatoire français de sécurité
+              sociale et soumis aux prélèvements sociaux ordinaires. Il vend une
+              pièce d’or frappée après 1800 relevant des métaux précieux, achetée
+              1 800 € et détenue depuis cinq années révolues, pour un prix fictif
+              de 2 400 €. La vente est imposable, sans exonération particulière ;
+              les frais et la marge de rachat ne sont pas pris en compte.
             </p>
 
             <p>
-              OrTrack calcule une estimation du montant net selon les régimes
-              simulés dans l’application.
+              Au forfait, la base est le prix de vente : 2 400 €. La taxe et la
+              CRDS représentent 2 400 € × 11,5 % = 276 €. Il reste 2 124 € après
+              cette taxation, avant les frais exclus de l’exemple.
+            </p>
+
+            <p>
+              Pour l’option plus-values, en supposant les justificatifs et
+              l’identification suffisants : plus-value de 600 €, abattement de
+              15 % (trois années au-delà de la deuxième), soit 90 € ; la base
+              après abattement est de 510 €.
+            </p>
+
+            <p>
+              Dans ce cas, le taux global est de 36,2 % : 19 % d’impôt sur le
+              revenu, 9,2 % de CSG, 0,5 % de CRDS et 7,5 % de prélèvement de
+              solidarité. Sur 510 €, cela représente 96,90 € d’impôt sur le
+              revenu et 87,72 € de prélèvements sociaux, soit 184,62 € au total.
+              Il reste 2 215,38 € après cette taxation, avant les frais exclus.
+              Le forfait représente ici 276 €, contre 184,62 € sur la plus-value,
+              uniquement si l’option et toutes les hypothèses sont valables.
+            </p>
+
+            <p className="text-sm">
+              Le taux général de CSG de 10,6 % ne s’applique pas à cette
+              catégorie de plus-values, qui relève de la dérogation à 9,2 %.
+              Certaines affiliations sociales étrangères peuvent ouvrir une
+              exonération de CSG et de CRDS sous conditions : elles sont exclues
+              de cet exemple. Votre situation doit être vérifiée avant une vente.
+            </p>
+
+            <p className="text-sm">
+              <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VK et 150 VL</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.allowance}>Abattement : CGI, art. 150 VC</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.incomeTaxRate}>IR : CGI, art. 200 B</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.socialContributions}>CSS, art. L136-7, I, 2°, I ter et VI</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.csgRate}>CSG : CSS, art. L136-8, IV, 2°</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.crdsCapitalGains}>CRDS : ordonnance 96-50, art. 16 et 19</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.solidarityRate}>Solidarité : CGI, art. 235 ter</FiscalSource>
             </p>
 
             <p className="text-sm text-[#9A8E7A]">
-              Les résultats sont indicatifs. Ils ne constituent pas un conseil
-              fiscal.
+              Exemple pédagogique fictif, indépendant des résultats de
+              l’application. Il ne constitue pas un conseil fiscal.
             </p>
           </div>
         </div>
@@ -270,15 +387,16 @@ export default function FiscaliteVenteOrFrancePage() {
               </h2>
 
               <p className="mt-4 max-w-2xl leading-7">
-                OrTrack vous aide à connaître la valeur estimée de votre
-                portefeuille et le montant net estimé en cas de vente.
+                Enregistrez vos achats et suivez votre portefeuille sur Android.
+                Premium donne accès aux simulations fiscales par achat et à la
+                comparaison détaillée des régimes pour les produits éligibles.
               </p>
             </div>
 
             <div>
-              <GooglePlayBadge className="h-14 sm:h-16" />
+              <GooglePlayBadge location="mid" className="h-14 sm:h-16" />
               <p className="mt-3 text-sm font-semibold text-[#3A2D0F]">
-                Estimez votre net vendeur dans l’application.
+                Ajoutez votre première pièce ou votre premier lingot.
               </p>
             </div>
           </div>
@@ -304,6 +422,11 @@ export default function FiscaliteVenteOrFrancePage() {
             >
               <h3 className="font-black text-[#F5F0E8]">{faq.question}</h3>
               <p className="mt-3 leading-7 text-[#C7BBA8]">{faq.answer}</p>
+              {faq.sourceHref && (
+                <p className="mt-3 text-sm text-[#C7BBA8]">
+                  <FiscalSource href={faq.sourceHref}>{faq.sourceLabel}</FiscalSource>
+                </p>
+              )}
             </article>
           ))}
         </div>
@@ -316,16 +439,26 @@ export default function FiscaliteVenteOrFrancePage() {
             OrTrack · Fiscalité or France · Application de suivi des métaux
             précieux · Conçu en France · Données saisies par l’utilisateur
           </p>
+          <a className="underline underline-offset-4" href="mailto:contact@ortrack.fr">
+            Contact : contact@ortrack.fr
+          </a>
+          {/* Legal/privacy drafts are not approved. Do not link them as public notices. */}
         </div>
       </footer>
     </main>
   );
 }
 
-function GooglePlayBadge({ className = "h-14" }: { className?: string }) {
+function GooglePlayBadge({
+  location,
+  className = "h-14",
+}: {
+  location: PlayCtaLocation;
+  className?: string;
+}) {
   return (
     <a
-      href={PLAY_STORE_URL}
+      href={getPlayStoreUrl(location)}
       aria-label="Télécharger OrTrack sur Google Play"
       className="inline-flex w-fit items-center transition hover:scale-[1.02]"
     >
@@ -338,6 +471,10 @@ function GooglePlayBadge({ className = "h-14" }: { className?: string }) {
       />
     </a>
   );
+}
+
+function FiscalSource({ href, children }: { href: string; children: ReactNode }) {
+  return <a className="underline underline-offset-4" href={href}>{children}</a>;
 }
 
 function BackgroundGlow() {
