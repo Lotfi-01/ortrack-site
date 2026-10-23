@@ -206,14 +206,6 @@ export default function FiscaliteVenteOrFrancePage() {
             <MiniStat title="Simulation" label="indicative" />
           </div>
 
-          <p className="mt-6 max-w-2xl text-[13px] font-medium leading-6 text-[#C7BBA8]">
-            Les explications ci-dessous concernent les ventes occasionnelles de
-            particuliers résidents fiscaux français, hors activité
-            professionnelle. La valeur au cours du métal, l’estimation après
-            impôt et l’offre réelle de rachat sont des montants distincts.
-            Le palladium est suivi sans simulation fiscale ; la couverture
-            fiscale du platine dépend du produit.
-          </p>
           {FISCAL_REVIEW_DATE && (
             <p className="mt-3 text-sm text-[#C7BBA8]">
               Revue fiscale approuvée le {FISCAL_REVIEW_DATE}.
@@ -226,155 +218,251 @@ export default function FiscaliteVenteOrFrancePage() {
 
       <section
         id="simulation"
-        className="relative z-10 mx-auto grid max-w-6xl gap-5 px-6 pb-20 md:grid-cols-3"
+        className="relative z-10 mx-auto max-w-6xl px-6 pb-20"
       >
-        <InfoCard title={"Taxe forfaitaire\u00A0: 11,5 %"}>
-          <p>
-            Pour une vente imposable dans la catégorie des métaux précieux, la
-            taxe est calculée sur le prix de vente, même sans plus-value : 11 %
-            de taxe forfaitaire et 0,5 % de CRDS.
+        <div className="mb-8 max-w-[75ch]">
+          <h2 className="text-3xl font-black tracking-tight">
+            {"Comment est taxée la vente d’or en France\u00A0?"}
+          </h2>
+          <p className="mt-5 text-sm font-medium leading-7 text-[#D6CBBB]">
+            Les explications ci-dessous concernent les ventes occasionnelles de
+            particuliers résidents fiscaux français, hors activité
+            professionnelle. La valeur au cours du métal, l’estimation après
+            impôt et l’offre réelle de rachat sont des montants distincts.
+            Le palladium est suivi sans simulation fiscale ; la couverture
+            fiscale du platine dépend du produit.
           </p>
-          <p className="mt-4">
-            Cette catégorie comprend notamment les lingots d’or et les monnaies
-            d’or ou d’argent postérieures à 1800. Les bijoux et objets de
-            collection suivent d’autres règles. La catégorie fiscale d’un jeton
-            ou d’un produit particulier ne se déduit pas de son seul nom.
-          </p>
-          <p className="mt-4">
-            Le seuil de 5 000 € et les autres exonérations sont précisés dans la
-            FAQ ci-dessous.
-          </p>
-          <p className="mt-5 text-sm">
-            <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VI, 150 VJ et 150 VK</FiscalSource>
-            {" · "}
-            <FiscalSource href={FISCAL_SOURCES.crds}>CRDS : ministère de l’Économie</FiscalSource>
-            {" · "}
-            <FiscalSource href={FISCAL_SOURCES.classification}>BOFiP, classification, §20 à 70</FiscalSource>
-          </p>
-        </InfoCard>
+        </div>
 
-        <InfoCard title={"Plus-value\u00A0: une option sous conditions"}>
-          <p>
-            L’option pour le régime des plus-values sur biens meubles peut
-            remplacer la taxe forfaitaire si les conditions sont remplies :
-          </p>
+        <div className="grid items-start gap-5 md:grid-cols-3">
+          <InfoCard title={"Taxe forfaitaire\u00A0: 11,5 %"}>
+            <p className="font-semibold text-[#F5F0E8]">
+              11,5 % du prix de vente, même sans plus-value.
+            </p>
+            <p className="mt-4">
+              Le seuil de 5 000 € et les autres exonérations sont précisés dans la
+              FAQ ci-dessous.
+            </p>
+            <details className="mt-5 border-t border-[#3A3328] pt-3">
+              <summary className="cursor-pointer rounded-md py-2 font-bold text-[#F5F0E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]">
+                En savoir plus
+              </summary>
+              <div className="mt-3 space-y-4">
+                <p>
+                  Pour une vente imposable dans la catégorie des métaux précieux, la
+                  taxe est calculée sur le prix de vente, même sans plus-value : 11 %
+                  de taxe forfaitaire et 0,5 % de CRDS.
+                </p>
+                <p className="mt-4">
+                  Cette catégorie comprend notamment les lingots d’or et les monnaies
+                  d’or ou d’argent postérieures à 1800. Les bijoux et objets de
+                  collection suivent d’autres règles. La catégorie fiscale d’un jeton
+                  ou d’un produit particulier ne se déduit pas de son seul nom.
+                </p>
+              </div>
+            </details>
+            <p className="mt-auto pt-5 text-sm leading-6">
+              {"Sources\u00A0: "}
+              <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VI, 150 VJ et 150 VK</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.crds}>CRDS : ministère de l’Économie</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.classification}>BOFiP, classification, §20 à 70</FiscalSource>
+            </p>
+          </InfoCard>
 
-          <ul className="mt-5 space-y-3">
-            {dataPoints.map((item) => (
-              <BulletItem key={item}>{item}</BulletItem>
-            ))}
-          </ul>
-          <p className="mt-4">
-            La plus-value correspond à la différence entre prix de vente et
-            coût d’acquisition, selon les règles applicables. Un abattement de
-            5 % par année révolue au-delà de la deuxième conduit à une exonération
-            après vingt-deux ans, sous réserve des preuves nécessaires.
-          </p>
-          <p className="mt-5 text-sm">
-            <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VL</FiscalSource>
-            {" · "}
-            <FiscalSource href={FISCAL_SOURCES.capitalGains}>CGI, art. 150 UA</FiscalSource>
-            {" · "}
-            <FiscalSource href={FISCAL_SOURCES.allowance}>CGI, art. 150 VC</FiscalSource>
-            {" · "}
-            <FiscalSource href={FISCAL_SOURCES.proof}>BOFiP, justificatifs, §90</FiscalSource>
-          </p>
-        </InfoCard>
+          <InfoCard title={"Plus-value\u00A0: une option sous conditions"}>
+            <p className="font-semibold text-[#F5F0E8]">
+              Une option possible, sous conditions de justificatifs.
+            </p>
+            <details className="mt-5 border-t border-[#3A3328] pt-3">
+              <summary className="cursor-pointer rounded-md py-2 font-bold text-[#F5F0E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]">
+                En savoir plus
+              </summary>
+              <div className="mt-3 space-y-4">
+                <p>
+                  L’option pour le régime des plus-values sur biens meubles peut
+                  remplacer la taxe forfaitaire si les conditions sont remplies :
+                </p>
+                <ul className="mt-5 space-y-3">
+                  {dataPoints.map((item) => (
+                    <BulletItem key={item}>{item}</BulletItem>
+                  ))}
+                </ul>
+                <p className="mt-4">
+                  La plus-value correspond à la différence entre prix de vente et
+                  coût d’acquisition, selon les règles applicables. Un abattement de
+                  5 % par année révolue au-delà de la deuxième conduit à une exonération
+                  après vingt-deux ans, sous réserve des preuves nécessaires.
+                </p>
+              </div>
+            </details>
+            <p className="mt-auto pt-5 text-sm leading-6">
+              {"Sources\u00A0: "}
+              <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VL</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.capitalGains}>CGI, art. 150 UA</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.allowance}>CGI, art. 150 VC</FiscalSource>
+              {" · "}
+              <FiscalSource href={FISCAL_SOURCES.proof}>BOFiP, justificatifs, §90</FiscalSource>
+            </p>
+          </InfoCard>
 
-        <InfoCard title="Valeur estimée et prix de rachat">
-          <p>
-            La valorisation au cours du métal est une estimation fondée sur les
-            cours disponibles et les données de vos achats. Elle ne constitue
-            pas une offre de rachat.
-          </p>
-          <p className="mt-4">
-            Une estimation après fiscalité ajoute des hypothèses de taxation.
-            Les frais, la marge du professionnel, l’état et les caractéristiques
-            du produit peuvent modifier le montant réellement reçu. Ne supposez
-            pas que ces coûts sont déduits par la simulation.
-          </p>
-          <p className="mt-4">
-            Demandez une offre au professionnel et vérifiez vos justificatifs
-            avant de vendre.
-          </p>
-        </InfoCard>
+          <InfoCard title="Valeur estimée et prix de rachat">
+            <p className="font-semibold text-[#F5F0E8]">
+              {"Trois montants à ne pas confondre\u00A0: valeur au cours, estimation après impôt, offre de rachat."}
+            </p>
+            <p className="mt-4">
+              Demandez une offre au professionnel et vérifiez vos justificatifs
+              avant de vendre.
+            </p>
+            <details className="mt-5 border-t border-[#3A3328] pt-3">
+              <summary className="cursor-pointer rounded-md py-2 font-bold text-[#F5F0E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]">
+                En savoir plus
+              </summary>
+              <div className="mt-3 space-y-4">
+                <p>
+                  La valorisation au cours du métal est une estimation fondée sur les
+                  cours disponibles et les données de vos achats. Elle ne constitue
+                  pas une offre de rachat.
+                </p>
+                <p className="mt-4">
+                  Une estimation après fiscalité ajoute des hypothèses de taxation.
+                  Les frais, la marge du professionnel, l’état et les caractéristiques
+                  du produit peuvent modifier le montant réellement reçu. Ne supposez
+                  pas que ces coûts sont déduits par la simulation.
+                </p>
+              </div>
+            </details>
+          </InfoCard>
+        </div>
       </section>
 
       <section className="relative z-10 mx-auto max-w-6xl px-6 pb-20">
-        <div className="grid gap-8 rounded-[2rem] border border-[#2A261F] bg-[#1C1A17] p-6 shadow-2xl shadow-black/20 md:grid-cols-[0.9fr_1.1fr] md:p-10">
-          <div>
-            <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#C9A84C]">
-              Exemple indicatif
-            </p>
+        <div className="rounded-[2rem] border border-[#2A261F] bg-[#1C1A17] p-6 shadow-2xl shadow-black/20 md:p-10">
+          <p className="mb-3 text-sm font-black uppercase tracking-[0.18em] text-[#C9A84C]">
+            Exemple indicatif
+          </p>
+          <h2 className="text-3xl font-black tracking-tight">
+            {"Combien resterait-il après impôt\u00A0?"}
+          </h2>
+          <p className="mt-5 max-w-[75ch] leading-7 text-[#D6CBBB]">
+            {"Exemple fictif\u00A0: vente imposable en France d’une pièce d’or relevant des métaux précieux, détenue cinq années révolues. Le régime des plus-values suppose des justificatifs valables et les hypothèses sociales précisées dans le détail du calcul."}
+          </p>
 
-            <h2 className="text-3xl font-black tracking-tight">
-              Un exemple chiffré avant de vendre
-            </h2>
+          <dl className="mt-8 grid grid-cols-3 gap-3 rounded-2xl border border-[#3A3328] p-4 sm:gap-6 sm:p-5">
+            <div>
+              <dt className="text-xs leading-5 text-[#D6CBBB] sm:text-sm">Prix d’achat</dt>
+              <dd className="mt-2 text-base font-black sm:text-xl">1 800 €</dd>
+            </div>
+            <div>
+              <dt className="text-xs leading-5 text-[#D6CBBB] sm:text-sm">Vente fictive</dt>
+              <dd className="mt-2 text-base font-black sm:text-xl">2 400 €</dd>
+            </div>
+            <div>
+              <dt className="text-xs leading-5 text-[#D6CBBB] sm:text-sm">Détention</dt>
+              <dd className="mt-2 text-base font-black sm:text-xl">5 ans</dd>
+            </div>
+          </dl>
+
+          <div className="mt-6 grid gap-5 md:grid-cols-2">
+            <article className="rounded-3xl border border-[#3A3328] bg-[#12110F]/60 p-5 sm:p-6">
+              <h3 className="text-xl font-black">Taxe forfaitaire</h3>
+              <p className="mt-6 text-sm text-[#D6CBBB]">Impôt estimé</p>
+              <p className="mt-2 text-4xl font-black tracking-tight text-[#C9A84C]">276 €</p>
+              <p className="mt-3 text-sm text-[#D6CBBB]">11,5 % × 2 400 €</p>
+              <dl className="mt-6 border-t border-[#3A3328] pt-5">
+                <dt className="text-sm text-[#D6CBBB]">Net avant frais</dt>
+                <dd className="mt-2 text-2xl font-black">2 124 €</dd>
+              </dl>
+            </article>
+            <article className="rounded-3xl border border-[#C9A84C]/40 bg-[#12110F]/60 p-5 sm:p-6">
+              <h3 className="text-xl font-black">Option plus-values</h3>
+              <p className="mt-6 text-sm text-[#D6CBBB]">Impôt estimé</p>
+              <p className="mt-2 text-4xl font-black tracking-tight text-[#C9A84C]">184,62 €</p>
+              <p className="mt-3 text-sm text-[#D6CBBB]">36,2 % × 510 €</p>
+              <dl className="mt-6 border-t border-[#3A3328] pt-5">
+                <dt className="text-sm text-[#D6CBBB]">Net avant frais</dt>
+                <dd className="mt-2 text-2xl font-black">2 215,38 €</dd>
+              </dl>
+              <p className="mt-5 max-w-[75ch] text-sm leading-6 text-[#D6CBBB]">
+                Uniquement si l’option et toutes les hypothèses sont valables.
+              </p>
+            </article>
           </div>
 
-          <div className="space-y-4 text-[#C7BBA8]">
+          <div className="mt-6 max-w-[75ch] space-y-3 text-sm leading-6 text-[#D6CBBB]">
+            <p>Hors frais et marge de rachat.</p>
             <p>
-              Hypothèse : vente en octobre 2026 par un particulier résident fiscal
-              français, affilié à un régime obligatoire français de sécurité
-              sociale et soumis aux prélèvements sociaux ordinaires. Il vend une
-              pièce d’or frappée après 1800 relevant des métaux précieux, achetée
-              1 800 € et détenue depuis cinq années révolues, pour un prix fictif
-              de 2 400 €. La vente est imposable, sans exonération particulière ;
-              les frais et la marge de rachat ne sont pas pris en compte.
-            </p>
-
-            <p>
-              Au forfait, la base est le prix de vente : 2 400 €. La taxe et la
-              CRDS représentent 2 400 € × 11,5 % = 276 €. Il reste 2 124 € après
-              cette taxation, avant les frais exclus de l’exemple.
-            </p>
-
-            <p>
-              Pour l’option plus-values, en supposant les justificatifs et
-              l’identification suffisants : plus-value de 600 €, abattement de
-              15 % (trois années au-delà de la deuxième), soit 90 € ; la base
-              après abattement est de 510 €.
-            </p>
-
-            <p>
-              Dans ce cas, le taux global est de 36,2 % : 19 % d’impôt sur le
-              revenu, 9,2 % de CSG, 0,5 % de CRDS et 7,5 % de prélèvement de
-              solidarité. Sur 510 €, cela représente 96,90 € d’impôt sur le
-              revenu et 87,72 € de prélèvements sociaux, soit 184,62 € au total.
-              Il reste 2 215,38 € après cette taxation, avant les frais exclus.
-              Le forfait représente ici 276 €, contre 184,62 € sur la plus-value,
-              uniquement si l’option et toutes les hypothèses sont valables.
-            </p>
-
-            <p className="text-sm">
-              Le taux général de CSG de 10,6 % ne s’applique pas à cette
-              catégorie de plus-values, qui relève de la dérogation à 9,2 %.
-              Certaines affiliations sociales étrangères peuvent ouvrir une
-              exonération de CSG et de CRDS sous conditions : elles sont exclues
-              de cet exemple. Votre situation doit être vérifiée avant une vente.
-            </p>
-
-            <p className="text-sm">
-              <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VK et 150 VL</FiscalSource>
-              {" · "}
-              <FiscalSource href={FISCAL_SOURCES.allowance}>Abattement : CGI, art. 150 VC</FiscalSource>
-              {" · "}
-              <FiscalSource href={FISCAL_SOURCES.incomeTaxRate}>IR : CGI, art. 200 B</FiscalSource>
-              {" · "}
-              <FiscalSource href={FISCAL_SOURCES.socialContributions}>CSS, art. L136-7, I, 2°, I ter et VI</FiscalSource>
-              {" · "}
-              <FiscalSource href={FISCAL_SOURCES.csgRate}>CSG : CSS, art. L136-8, IV, 2°</FiscalSource>
-              {" · "}
-              <FiscalSource href={FISCAL_SOURCES.crdsCapitalGains}>CRDS : ordonnance 96-50, art. 16 et 19</FiscalSource>
-              {" · "}
-              <FiscalSource href={FISCAL_SOURCES.solidarityRate}>Solidarité : CGI, art. 235 ter</FiscalSource>
-            </p>
-
-            <p className="text-sm text-[#9A8E7A]">
               Exemple pédagogique fictif, indépendant des résultats de
               l’application. Il ne constitue pas un conseil fiscal.
             </p>
           </div>
+
+          <details className="mt-8 border-t border-[#3A3328] pt-4">
+            <summary className="cursor-pointer rounded-md py-2 font-bold text-[#F5F0E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]">
+              Détail du calcul et sources
+            </summary>
+            <div className="mt-5 max-w-[75ch] space-y-5 leading-7 text-[#D6CBBB]">
+              <p>
+                Hypothèse : vente en octobre 2026 par un particulier résident fiscal
+                français, affilié à un régime obligatoire français de sécurité
+                sociale et soumis aux prélèvements sociaux ordinaires. Il vend une
+                pièce d’or frappée après 1800 relevant des métaux précieux, achetée
+                1 800 € et détenue depuis cinq années révolues, pour un prix fictif
+                de 2 400 €. La vente est imposable, sans exonération particulière ;
+                les frais et la marge de rachat ne sont pas pris en compte.
+              </p>
+
+              <p>
+                Au forfait, la base est le prix de vente : 2 400 €. La taxe et la
+                CRDS représentent 2 400 € × 11,5 % = 276 €. Il reste 2 124 € après
+                cette taxation, avant les frais exclus de l’exemple.
+              </p>
+
+              <p>
+                Pour l’option plus-values, en supposant les justificatifs et
+                l’identification suffisants : plus-value de 600 €, abattement de
+                15 % (trois années au-delà de la deuxième), soit 90 € ; la base
+                après abattement est de 510 €.
+              </p>
+
+              <p>
+                Dans ce cas, le taux global est de 36,2 % : 19 % d’impôt sur le
+                revenu, 9,2 % de CSG, 0,5 % de CRDS et 7,5 % de prélèvement de
+                solidarité. Sur 510 €, cela représente 96,90 € d’impôt sur le
+                revenu et 87,72 € de prélèvements sociaux, soit 184,62 € au total.
+                Il reste 2 215,38 € après cette taxation, avant les frais exclus.
+                Le forfait représente ici 276 €, contre 184,62 € sur la plus-value,
+                uniquement si l’option et toutes les hypothèses sont valables.
+              </p>
+
+              <p className="text-sm">
+                Le taux général de CSG de 10,6 % ne s’applique pas à cette
+                catégorie de plus-values, qui relève de la dérogation à 9,2 %.
+                Certaines affiliations sociales étrangères peuvent ouvrir une
+                exonération de CSG et de CRDS sous conditions : elles sont exclues
+                de cet exemple. Votre situation doit être vérifiée avant une vente.
+              </p>
+              <p className="text-sm leading-6">
+                {"Sources\u00A0: "}
+                <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VK et 150 VL</FiscalSource>
+                {" · "}
+                <FiscalSource href={FISCAL_SOURCES.allowance}>Abattement : CGI, art. 150 VC</FiscalSource>
+                {" · "}
+                <FiscalSource href={FISCAL_SOURCES.incomeTaxRate}>IR : CGI, art. 200 B</FiscalSource>
+                {" · "}
+                <FiscalSource href={FISCAL_SOURCES.socialContributions}>CSS, art. L136-7, I, 2°, I ter et VI</FiscalSource>
+                {" · "}
+                <FiscalSource href={FISCAL_SOURCES.csgRate}>CSG : CSS, art. L136-8, IV, 2°</FiscalSource>
+                {" · "}
+                <FiscalSource href={FISCAL_SOURCES.crdsCapitalGains}>CRDS : ordonnance 96-50, art. 16 et 19</FiscalSource>
+                {" · "}
+                <FiscalSource href={FISCAL_SOURCES.solidarityRate}>Solidarité : CGI, art. 235 ter</FiscalSource>
+              </p>
+            </div>
+          </details>
         </div>
       </section>
 
@@ -414,20 +502,22 @@ export default function FiscaliteVenteOrFrancePage() {
           </h2>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid items-start gap-4 md:grid-cols-2">
           {faqs.map((faq) => (
-            <article
+            <details
               key={faq.question}
               className="rounded-3xl border border-[#2A261F] bg-[#1C1A17]/85 p-6 shadow-xl shadow-black/10"
             >
-              <h3 className="font-black text-[#F5F0E8]">{faq.question}</h3>
-              <p className="mt-3 leading-7 text-[#C7BBA8]">{faq.answer}</p>
+              <summary className="cursor-pointer rounded-md py-2 font-bold text-[#F5F0E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]">
+                <h3 className="inline font-black">{faq.question}</h3>
+              </summary>
+              <p className="mt-4 max-w-[75ch] leading-7 text-[#D6CBBB]">{faq.answer}</p>
               {faq.sourceHref && (
-                <p className="mt-3 text-sm text-[#C7BBA8]">
+                <p className="mt-4 text-sm leading-6 text-[#D6CBBB]">
                   <FiscalSource href={faq.sourceHref}>{faq.sourceLabel}</FiscalSource>
                 </p>
               )}
-            </article>
+            </details>
           ))}
         </div>
       </section>
@@ -568,12 +658,12 @@ function PhoneMockup() {
 
 function InfoCard({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <article className="rounded-[2rem] border border-[#2A261F] bg-[#1C1A17]/85 p-6 shadow-xl shadow-black/10">
-      <h2 className="text-xl font-black tracking-tight text-[#F5F0E8]">
+    <article className="flex h-full min-w-0 flex-col rounded-[2rem] border border-[#2A261F] bg-[#1C1A17]/85 p-6 shadow-xl shadow-black/10">
+      <h3 className="text-xl font-black tracking-tight text-[#F5F0E8]">
         {title}
-      </h2>
+      </h3>
 
-      <div className="mt-4 leading-7 text-[#C7BBA8]">{children}</div>
+      <div className="mt-4 flex flex-1 flex-col leading-7 text-[#D6CBBB]">{children}</div>
     </article>
   );
 }
