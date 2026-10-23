@@ -95,7 +95,7 @@ const faqs = [
     sourceLabel: "CGI, art. 150 VI, 150 VJ et 150 VK",
   },
   {
-    question: "Vente d’or\u00A0: existe-t-il une exonération jusqu’à 5 000 €\u00A0?",
+    question: "Vente d’or\u00A0: existe-t-il une exonération jusqu’à 5\u00A0000\u00A0€\u00A0?",
     answer:
       "L’article 150 VJ, 4° vise les bijoux, objets d’art, de collection ou d’antiquité lorsque le prix de cession n’excède pas 5 000 €. Il ne vise pas les métaux précieux de l’article 150 VI, I, 1°. Le seul fait de vendre un lingot ou une pièce relevant de cette catégorie pour moins de 5 000 € ne donne donc pas cette exonération. La qualification du produit doit être vérifiée.",
     sourceHref: FISCAL_SOURCES.flatTax,
@@ -261,7 +261,7 @@ export default function FiscaliteVenteOrFrancePage() {
                 </p>
               </div>
             </details>
-            <p className="mt-auto pt-5 text-sm leading-6">
+            <p className="pt-5 text-sm leading-6">
               {"Sources\u00A0: "}
               <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VI, 150 VJ et 150 VK</FiscalSource>
               {" · "}
@@ -275,20 +275,20 @@ export default function FiscaliteVenteOrFrancePage() {
             <p className="font-semibold text-[#F5F0E8]">
               Une option possible, sous conditions de justificatifs.
             </p>
+            <p className="mt-4">
+              L’option pour le régime des plus-values sur biens meubles peut
+              remplacer la taxe forfaitaire si les conditions sont remplies :
+            </p>
+            <ul className="mt-5 space-y-3">
+              {dataPoints.map((item) => (
+                <BulletItem key={item}>{item}</BulletItem>
+              ))}
+            </ul>
             <details className="mt-5 border-t border-[#3A3328] pt-3">
               <summary className="cursor-pointer rounded-md py-2 font-bold text-[#F5F0E8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C9A84C]">
                 En savoir plus
               </summary>
               <div className="mt-3 space-y-4">
-                <p>
-                  L’option pour le régime des plus-values sur biens meubles peut
-                  remplacer la taxe forfaitaire si les conditions sont remplies :
-                </p>
-                <ul className="mt-5 space-y-3">
-                  {dataPoints.map((item) => (
-                    <BulletItem key={item}>{item}</BulletItem>
-                  ))}
-                </ul>
                 <p className="mt-4">
                   La plus-value correspond à la différence entre prix de vente et
                   coût d’acquisition, selon les règles applicables. Un abattement de
@@ -297,7 +297,7 @@ export default function FiscaliteVenteOrFrancePage() {
                 </p>
               </div>
             </details>
-            <p className="mt-auto pt-5 text-sm leading-6">
+            <p className="pt-5 text-sm leading-6">
               {"Sources\u00A0: "}
               <FiscalSource href={FISCAL_SOURCES.flatTax}>CGI, art. 150 VL</FiscalSource>
               {" · "}
