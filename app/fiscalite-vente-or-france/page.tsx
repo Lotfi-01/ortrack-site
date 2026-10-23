@@ -88,35 +88,35 @@ const dataPoints = [
 
 const faqs = [
   {
-    question: "Quelle taxe sur la vente d’or en France ?",
+    question: "Quelle taxe sur la vente d’or en France\u00A0?",
     answer:
       "Pour un particulier résident fiscal français, une vente relevant de la catégorie des métaux précieux est en principe soumise à 11,5 % du prix de vente : 11 % de taxe et 0,5 % de CRDS. L’option pour les plus-values est soumise à conditions. Des exonérations spécifiques existent, notamment pour certaines cessions à des institutions publiques.",
     sourceHref: FISCAL_SOURCES.flatTax,
     sourceLabel: "CGI, art. 150 VI, 150 VJ et 150 VK",
   },
   {
-    question: "Vente d’or : existe-t-il une exonération jusqu’à 5 000 € ?",
+    question: "Vente d’or\u00A0: existe-t-il une exonération jusqu’à 5 000 €\u00A0?",
     answer:
       "L’article 150 VJ, 4° vise les bijoux, objets d’art, de collection ou d’antiquité lorsque le prix de cession n’excède pas 5 000 €. Il ne vise pas les métaux précieux de l’article 150 VI, I, 1°. Le seul fait de vendre un lingot ou une pièce relevant de cette catégorie pour moins de 5 000 € ne donne donc pas cette exonération. La qualification du produit doit être vérifiée.",
     sourceHref: FISCAL_SOURCES.flatTax,
     sourceLabel: "CGI, art. 150 VI, I et 150 VJ, 4°",
   },
   {
-    question: "Faut-il garder une facture d’achat pour l’or ?",
+    question: "Faut-il garder une facture d’achat pour l’or\u00A0?",
     answer:
       "Conservez les justificatifs de la date et du prix d’acquisition, ou d’une détention de plus de vingt-deux ans. Pour les métaux précieux, le bien ou le lot doit aussi être suffisamment individualisé : numéro, emballage scellé identifiable ou autre élément admis. Enregistrer un achat dans OrTrack ne remplace pas ces preuves et ne garantit pas l’accès au régime des plus-values.",
     sourceHref: FISCAL_SOURCES.proof,
     sourceLabel: "BOFiP, BOI-RPPM-PVBMC-20-20, notamment §90",
   },
   {
-    question: "La vente d’or est-elle exonérée après 22 ans ?",
+    question: "La vente d’or est-elle exonérée après 22 ans\u00A0?",
     answer:
       "Dans le régime des plus-values, l’abattement de 5 % par année révolue au-delà de la deuxième conduit à une exonération après vingt-deux ans de détention. L’option reste soumise aux justificatifs et à l’identification du bien ou du lot. L’ancienneté saisie dans une application ne suffit pas à établir ce droit.",
     sourceHref: FISCAL_SOURCES.allowance,
     sourceLabel: "CGI, art. 150 VC ; conditions de l’art. 150 VL et du BOFiP ci-dessus",
   },
   {
-    question: "OrTrack donne-t-il un conseil fiscal ?",
+    question: "OrTrack donne-t-il un conseil fiscal\u00A0?",
     answer:
       "Non. Les résultats sont indicatifs. Ils ne constituent pas un conseil fiscal.",
   },
@@ -228,7 +228,7 @@ export default function FiscaliteVenteOrFrancePage() {
         id="simulation"
         className="relative z-10 mx-auto grid max-w-6xl gap-5 px-6 pb-20 md:grid-cols-3"
       >
-        <InfoCard title="Taxe forfaitaire : 11,5 %">
+        <InfoCard title={"Taxe forfaitaire\u00A0: 11,5 %"}>
           <p>
             Pour une vente imposable dans la catégorie des métaux précieux, la
             taxe est calculée sur le prix de vente, même sans plus-value : 11 %
@@ -253,7 +253,7 @@ export default function FiscaliteVenteOrFrancePage() {
           </p>
         </InfoCard>
 
-        <InfoCard title="Plus-value : une option sous conditions">
+        <InfoCard title={"Plus-value\u00A0: une option sous conditions"}>
           <p>
             L’option pour le régime des plus-values sur biens meubles peut
             remplacer la taxe forfaitaire si les conditions sont remplies :
